@@ -1,5 +1,5 @@
 # Rest Timer ⏱️
-
+ 
 [![Live Demo](https://img.shields.io/badge/▶_Live_Demo-ff6a3d?style=for-the-badge)](https://faust-cloud.github.io/rest-timer/)
 &nbsp;
 ![Hosted on GitHub Pages](https://img.shields.io/badge/hosted_on-GitHub_Pages-121013?style=flat-square&logo=github)
@@ -10,6 +10,7 @@ A minimal, cinematic rest timer for between your gym sets. Tap to start, drag to
 
 **→ https://faust-cloud.github.io/rest-timer/**
 
+![Uploading image.png…]()
 <!-- Add a screenshot: drag a PNG into this editor on GitHub and it will insert the link here -->
 <!-- ![Screenshot](screenshot.png) -->
 
