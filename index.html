@@ -20,17 +20,16 @@
     --r-pill:999px;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;}
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none;}
   body{
+    position:fixed;inset:0;
     font-family:var(--sans); color:var(--ink);
     background:
       radial-gradient(72% 46% at 50% 43%, rgba(255,150,80,.22), rgba(255,150,80,0) 66%),
       linear-gradient(180deg,#0a1738 0%,#0a1022 38%,#090a12 64%,#050507 100%);
-    background-attachment:fixed;
     display:flex;flex-direction:column;align-items:center;
-    min-height:100vh;min-height:100dvh;
-    padding:calc(20px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) calc(22px + env(safe-area-inset-left));
-    overflow-x:hidden;user-select:none;
+    padding:calc(20px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(22px + env(safe-area-inset-left));
+    overflow:hidden;user-select:none;touch-action:none;
   }
   .grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:60;opacity:.085;mix-blend-mode:overlay;}
 
@@ -45,7 +44,7 @@
   .icon-btn:active{transform:scale(.9);}
   .icon-btn.hidden{opacity:0;pointer-events:none;}
 
-  .hero{flex:1;display:flex;align-items:center;justify-content:center;width:100%;}
+  .main{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(24px,4.5vh,40px);}
   .timer{position:relative;width:100%;max-width:328px;aspect-ratio:1;display:grid;place-items:center;cursor:pointer;touch-action:none;}
   .timer.pulse{animation:pulse 1.2s ease-in-out infinite;}
   @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.016);}}
@@ -65,26 +64,22 @@
   @keyframes pop{0%{transform:scale(1);}42%{transform:scale(1.09);}100%{transform:scale(1);}}
   .state{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-top:20px;height:13px;}
 
-  .bottom{width:100%;display:flex;flex-direction:column;align-items:center;gap:22px;}
+  .bottom{width:100%;display:flex;flex-direction:column;align-items:center;gap:26px;}
 
-  .toc{width:100%;max-width:300px;display:flex;flex-direction:column;}
-  .toc button{display:flex;align-items:flex-end;gap:12px;background:none;border:none;cursor:pointer;
-    padding:11px 2px;color:var(--muted);transition:color .25s;}
-  .toc .idx{font-family:var(--sans);font-size:11px;letter-spacing:.12em;color:var(--faint);min-width:20px;text-align:left;line-height:1.6;}
-  .toc .leader{flex:1;border-bottom:1px dotted var(--faint);transform:translateY(-4px);}
-  .toc .lab{font-family:var(--serif);font-size:18px;line-height:1;letter-spacing:.01em;}
-  .toc button.active{color:var(--ink);}
-  .toc button.active .lab{color:var(--a1);}
-  .toc button.active .idx{color:var(--a1);}
+  .presets{display:flex;gap:10px;justify-content:center;}
+  .presets button{min-width:94px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-pill);
+    padding:12px 22px;font-family:var(--sans);font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    transition:transform .12s,color .25s,border-color .25s,box-shadow .25s;}
+  .presets button:active{transform:scale(.95);}
+  .presets button.active{color:var(--a1);border-color:rgba(255,150,90,.5);box-shadow:0 0 0 1px rgba(255,150,90,.2),0 0 16px -6px var(--glow);}
 
   .sets{display:inline-flex;align-items:center;gap:22px;}
   .sets button{width:34px;height:34px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--card);
     font-size:20px;font-weight:400;color:var(--muted);cursor:pointer;line-height:1;transition:transform .12s,color .15s;
     backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
   .sets button:active{transform:scale(.85);color:var(--ink);}
-  .sets .mid{display:flex;align-items:baseline;gap:6px;min-width:60px;justify-content:center;}
-  .sets .snum{font-family:var(--serif);font-size:22px;font-variant-numeric:tabular-nums lining-nums;}
-  .sets .slbl{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);}
+  .sets .snum{font-family:var(--serif);font-size:24px;font-variant-numeric:tabular-nums lining-nums;min-width:30px;text-align:center;}
 
   @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important;} }
 </style>
@@ -102,7 +97,7 @@
       </button>
     </header>
 
-    <div class="hero">
+    <main class="main">
       <div class="timer" id="timer">
         <svg viewBox="0 0 240 240">
           <defs>
@@ -117,19 +112,19 @@
           <div class="state" id="state"></div>
         </div>
       </div>
-    </div>
 
-    <div class="bottom">
-      <div class="toc" id="presets">
-        <button data-sec="60" class="active"><span class="idx">01</span><span class="leader"></span><span class="lab">1 min</span></button>
-        <button data-sec="180"><span class="idx">02</span><span class="leader"></span><span class="lab">3 min</span></button>
+      <div class="bottom">
+        <div class="presets" id="presets">
+          <button data-sec="60" class="active">1 min</button>
+          <button data-sec="180">3 min</button>
+        </div>
+        <div class="sets">
+          <button id="setMinus" aria-label="Fewer sets">−</button>
+          <span class="snum" id="setNum">1</span>
+          <button id="setPlus" aria-label="More sets">+</button>
+        </div>
       </div>
-      <div class="sets">
-        <button id="setMinus" aria-label="Fewer sets">−</button>
-        <div class="mid"><span class="snum" id="setNum">1</span><span class="slbl">Set</span></div>
-        <button id="setPlus" aria-label="More sets">+</button>
-      </div>
-    </div>
+    </main>
   </div>
 
 <script>
@@ -165,7 +160,7 @@
 
   function render(){
     timeEl.textContent=fmt(remain);
-    const frac=total>0? Math.max(0,remain/total):0;
+    const frac=total>0?Math.max(0,remain/total):0;
     prog.style.strokeDashoffset=CIRC*(1-frac);
     prog.classList.toggle('urge', running&&remain<=10);
     timerEl.classList.toggle('pulse', running&&remain<=5&&remain>0);
