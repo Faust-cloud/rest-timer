@@ -10,7 +10,8 @@ A minimal, cinematic rest timer for between your gym sets. Tap to start, drag to
 
 **→ https://faust-cloud.github.io/rest-timer/**
 
-![Uploading image.png…]()
+<img width="1195" height="572" alt="image" src="https://github.com/user-attachments/assets/2c73355e-808c-479e-a347-fe07eda6bbca" />
+
 <!-- Add a screenshot: drag a PNG into this editor on GitHub and it will insert the link here -->
 <!-- ![Screenshot](screenshot.png) -->
 
