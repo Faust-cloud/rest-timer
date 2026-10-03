@@ -31,10 +31,12 @@
     padding:calc(20px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(22px + env(safe-area-inset-left));
     overflow:hidden;user-select:none;touch-action:none;
   }
-  .grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:60;opacity:.085;mix-blend-mode:overlay;}
+  /* film grain — small pre-rendered tile, cheap to paint */
+  .grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.07;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
   .wrap{width:100%;max-width:400px;margin:0 auto;display:flex;flex-direction:column;align-items:center;flex:1;
-    animation:enter .8s cubic-bezier(.2,.8,.2,1) both;}
+    animation:enter .45s ease both;}
   @keyframes enter{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 
   header{width:100%;display:flex;align-items:center;justify-content:space-between;}
@@ -85,7 +87,7 @@
 </style>
 </head>
 <body>
-  <svg class="grain"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg>
+  <div class="grain"></div>
 
   <div class="wrap">
     <header>
